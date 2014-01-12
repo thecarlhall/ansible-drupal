@@ -1,0 +1,17 @@
+---
+- name: ensure dir for site
+  file: path=/var/www state=directory
+
+#- name: install a drupal site
+#  shell: drush dl drupal --drupal-project-rename={{ drupal.project_name }} chdir={{ drupal.install_dir }} creates={{ drupal.install_dir }}/{{ drupal.project_name}}
+
+#- name: setup the site
+#  shell: echo drush site-install standard --db-url=mysql://{{ drupal.db_user }}:{{ drupal.db_pass }}@localhost/{{ drupal.db_name }} --site-name={{ drupal.site_name }} chdir={{ drupal.install_dir }}/{{ drupal.project_name}}
+
+
+- name: download drupal config
+  template: src=nginx_config dest=/etc/nginx/sites-available/drupal
+
+- name: enable site config
+  file: state=link src=/etc/nginx/sites-available/drupal dest=/etc/nginx/sites-enabled/drupal
+

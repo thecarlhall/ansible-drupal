@@ -1,0 +1,8 @@
+drupal:
+  install_dir: /var/www
+  project_name: default
+  site_name: Default Site
+
+  db_user: root
+  db_pass: ""
+  db_name: drupal_default
