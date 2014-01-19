@@ -1,3 +1,4 @@
+---
 drupal:
   install_dir: /var/www
   project_name: default
@@ -6,3 +7,5 @@ drupal:
   db_user: root
   db_pass: ""
   db_name: drupal_default
+
+  server_url: localhost

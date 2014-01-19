@@ -1,17 +1,25 @@
 ---
+- include_vars: "{{ ansible_os_family }}.yml"
+
+- name: install nginx
+  apt: name=nginx state=present
+
 - name: ensure dir for site
-  file: path=/var/www state=directory
+  file: path={{ drupal.install_dir }} state=directory
 
-#- name: install a drupal site
-#  shell: drush dl drupal --drupal-project-rename={{ drupal.project_name }} chdir={{ drupal.install_dir }} creates={{ drupal.install_dir }}/{{ drupal.project_name}}
 
-#- name: setup the site
-#  shell: echo drush site-install standard --db-url=mysql://{{ drupal.db_user }}:{{ drupal.db_pass }}@localhost/{{ drupal.db_name }} --site-name={{ drupal.site_name }} chdir={{ drupal.install_dir }}/{{ drupal.project_name}}
+- name: install a drupal site
+  shell: drush dl drupal --drupal-project-rename={{ drupal.project_name }} chdir={{ drupal.install_dir }} creates={{ drupal.install_dir }}/{{ drupal.project_name}}
+
+- name: setup the site
+  shell: echo drush site-install standard --db-url=mysql://{{ drupal.db_user }}:{{ drupal.db_pass }}@localhost/{{ drupal.db_name }} --site-name={{ drupal.site_name }} chdir={{ drupal.install_dir }}/{{ drupal.project_name}}
 
 
 - name: download drupal config
-  template: src=nginx_config dest=/etc/nginx/sites-available/drupal
+  template: src=nginx_config dest={{ drupal.config_dir }}/drupal
 
 - name: enable site config
-  file: state=link src=/etc/nginx/sites-available/drupal dest=/etc/nginx/sites-enabled/drupal
+  file: state=link src={{ drupal.config_dir }}/drupal dest={{ drupal.config_dir }}/drupal
 
+- name: start nginx
+  service: name=nginx state=restarted

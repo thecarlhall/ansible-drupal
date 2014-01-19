@@ -1,6 +1,6 @@
 server {
-  server_name {{ server_name }};
-  root {{ server_root }}; ## <-- Your only path reference.
+  server_name {{ drupal.server_url }};
+  root {{ drupal.install_dir }}; ## <-- Your only path reference.
 
   # Enable compression, this will help if you have for instance advagg module
   # by serving Gzip versions of the files.
@@ -54,7 +54,7 @@ server {
     # You have 2 options here
     # For D7 and above:
     # Clean URLs are handled in drupal_environment_initialize().
-    rewrite ^ /index.php;
+    #rewrite ^ /index.php;
     # For Drupal 6 and bwlow:
     # Some modules enforce no slash (/) at the end of the URL
     # Else this rewrite block wouldn't be needed (GlobalRedirect)
