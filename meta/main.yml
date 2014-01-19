@@ -1,3 +1,17 @@
 ---
+galaxy_info:
+  author: Carl Hall
+  description: Ansible role for installing a new Drupal site
+  license: Apache v2
+  min_ansible_version: 1.2
+  platforms:
+  - name: Ubuntu
+    versions:
+    - all
+  - name: Debian
+    versions:
+    - all
+  categories:
+  - development
 dependencies:
   - { role: ansible-drush }
