@@ -12,14 +12,14 @@
   shell: drush dl drupal --drupal-project-rename={{ drupal.project_name }} chdir={{ drupal.install_dir }} creates={{ drupal.install_dir }}/{{ drupal.project_name}}
 
 - name: setup the site
-  shell: echo drush site-install standard --db-url=mysql://{{ drupal.db_user }}:{{ drupal.db_pass }}@localhost/{{ drupal.db_name }} --site-name={{ drupal.site_name }} chdir={{ drupal.install_dir }}/{{ drupal.project_name}}
+  shell: echo drush site-install standard --db-url=mysql://{{ drupal.db_user }}:{{ drupal.db_pass }}@{{ drupal.db_host }}/{{ drupal.db_name }} --site-name={{ drupal.site_name }} chdir={{ drupal.install_dir }}/{{ drupal.project_name }}
 
 
 - name: download drupal config
-  template: src=nginx_config dest={{ drupal.config_dir }}/drupal
+  template: src=nginx_config dest={{ drupal.config_src_dir }}/{{ drupal.project_name }}
 
 - name: enable site config
-  file: state=link src={{ drupal.config_dir }}/drupal dest={{ drupal.config_dir }}/drupal
+  file: state=link src={{ drupal.config_src_dir }}/{{drupal.project_name }} dest={{ drupal.config_target_dir }}/{{ drupal.project_name }}
 
 - name: start nginx
   service: name=nginx state=restarted

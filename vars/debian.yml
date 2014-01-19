@@ -1,3 +1,4 @@
 ---
 drupal:
-  config_dir: /etc/nginx/sites-available
+  config_src_dir: /etc/nginx/sites-available
+  config_target_dir: /etc/nginx/sites-enabled
